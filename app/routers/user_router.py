@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.schemas.user_schema import UserCreate, UserResponse
 from app.services.user_service import create_user, get_users_with_posts
 from app.database import SessionLocal
+from app.schemas.user_schema import UserWithPostsResponse
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -19,4 +20,8 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=list[UserResponse])
 def list_users(limit: int = 10, offset: int = 0, db: Session = Depends(get_db)):
+    return get_users_with_posts(db, limit, offset)
+
+@router.get("/with-posts", response_model=list[UserWithPostsResponse])
+def list_users_with_posts(limit: int = 10, offset: int = 0, db: Session = Depends(get_db)):
     return get_users_with_posts(db, limit, offset)
