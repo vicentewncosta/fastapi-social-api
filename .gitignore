@@ -1,2 +1,4 @@
 venv
 social.db
+__pycache__
+*cpython*
