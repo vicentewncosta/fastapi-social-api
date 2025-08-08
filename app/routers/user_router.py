@@ -23,5 +23,12 @@ def list_users(limit: int = 10, offset: int = 0, db: Session = Depends(get_db)):
     return get_users_with_posts(db, limit, offset)
 
 @router.get("/with-posts", response_model=list[UserWithPostsResponse])
-def list_users_with_posts(limit: int = 10, offset: int = 0, db: Session = Depends(get_db)):
-    return get_users_with_posts(db, limit, offset)
+def list_users_with_posts(
+    limit: int = 10,
+    offset: int = 0,
+    username: str = None,
+    email: str = None,
+    order: str = None,
+    db: Session = Depends(get_db)
+):
+    return get_users_with_posts(db, limit, offset, username, email, order)
